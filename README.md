@@ -17,7 +17,7 @@ save_path = D:/path/to/GOES/
 4. In the directory named "GOES" create two sub-directories named "GOES_16" and "GOES_17".
 The directory tree should look something like this:
 
-'''console
+'''shell
 D:/
 └──path/   
    └───to/
