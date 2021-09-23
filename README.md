@@ -18,11 +18,11 @@ save_path = D:/path/to/GOES/
 The directory tree should look something like this:
 
 D:/
-|-- path
-    |-- to
-        |-- GOES
-            |-- GOES_16
-            |-- GOES_17
+└──path/   
+   └───to/
+       └───GOES/
+           └───GOES_16/
+           └───GOES_17/
 
 4. To the line starting with "partial_save_path" add the drive letter followed by a ":" and "/"
 so it looks something like this:
