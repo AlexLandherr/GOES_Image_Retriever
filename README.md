@@ -17,15 +17,20 @@ save_path = D:/path/to/GOES/
 4. In the directory named "GOES" create two sub-directories named "GOES_16" and "GOES_17".
 The directory tree should look something like this:
 
+'''
 D:/
-+-- _path
-    +-- _to
-        +-- _GOES
-            +-- _GOES_16
-            +-- _GOES_17
+│
+└──path/
+   │   
+   └───to/
+       │
+       └───GOES/
+           └───GOES_16/
+           |
+           └───GOES_17/
+'''
 
-
-4. To the line starting with "partial_save_path" add the drive letter followed by a : and /
+4. To the line starting with "partial_save_path" add the drive letter followed by a ":" and "/"
 so it looks something like this:
 
 partial_save_path = D:/
