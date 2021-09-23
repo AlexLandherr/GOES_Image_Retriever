@@ -18,7 +18,7 @@ save_path = D:/path/to/GOES/
 The directory tree should look something like this:
 
 '''
-D:/
+.
 │
 └──path/
    │   
