@@ -201,6 +201,7 @@ except (requests.ConnectionError, requests.Timeout) as exception:
     print("No internet connection.")
 
 except KeyboardInterrupt:
+    print()
     print("User interrupted program by Ctrl + C.")
 
 finally:
