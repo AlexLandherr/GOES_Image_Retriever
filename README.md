@@ -37,7 +37,7 @@ partial_save_path = D:/
 <h1>Background and Explanation</h1>
 This is a program that downloads weather satellite images from the National Oceanic and Atmospheric Administration (NOAA). They have a website for the GOES-16 and GOES-17 satellites in geostationary orbit. On the particular sites listed below the full disk and so called CONUS images are uploaded every 10 minutes (600 seconds) but with a 20 minute (1200 second) lag behind "real time"; so if an image was taken at 12:00:00 UTC it only appears on the website at 12:20:00 UTC.
 
-What further simplified the project was that the image URLs are highly predictable, they can look like this:
+What further simplified the project was that the image URLs are highly predictable, they can look like this (this link is long dead but remains to show the structure of the URL):
 https://cdn.star.nesdis.noaa.gov/GOES16/ABI/FD/GEOCOLOR/20211861830_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg
 
 Here 2021 is the year, 186 is the day number (described here for Python programmers: https://docs.python.org/3/library/datetime.html#date-objects) and 1830 is the time of day in UTC.
