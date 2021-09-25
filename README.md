@@ -42,7 +42,7 @@ https://cdn.star.nesdis.noaa.gov/GOES16/ABI/FD/GEOCOLOR/20211861830_GOES16-ABI-F
 
 Here 2021 is the year, 186 is the day number (described here for Python programmers: https://docs.python.org/3/library/datetime.html#date-objects) and 1830 is the time of day in UTC.
 
-Using all this information I wrote a series of programs that downloaded the GOES-16 and GOES-17 images retrospecitvely and prospectively; though for some reason no images older than three days (259200 seconds) can be downloaded from these particular servers. Over the course of about a year I fixed bugs and added new features like generating dummy images when I got an HTTP 400 or 500 series error. This program could probably be set to run for a long time with enough storage space. There's also a bunch of logging features and simple statistics for the downloaded data and program operation.
+Using all this information I wrote a series of programs that downloaded the GOES-16 and GOES-17 images retrospecitvely and prospectively; though for some reason no images older than three days (259200 seconds) can be downloaded from these particular servers. Over time I fixed bugs and added new features like generating dummy images when I got an HTTP 400 or 500 series error. This program could probably be set to run for a long time with enough storage space. There's also a bunch of logging features and simple statistics for the downloaded data and program operation.
 
 My code only downloads the GeoColor images in all resolutions except the "GeoTIFF" and "Animation Loop" options. The choice of GeoColor was made as I originally wrote this code to make full disk time lapse sequences of the Earth.
 
@@ -53,4 +53,4 @@ GOES-17 full disk images:
 https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G17
 
 <h1>Example Image</h1>
-![20212681250_GOES16-ABI-FD-GEOCOLOR-5424x5424](20212681250_GOES16-ABI-FD-GEOCOLOR-5424x5424.jpg)
+![20212681250_GOES16-ABI-FD-GEOCOLOR-5424x5424](https://user-images.githubusercontent.com/86981389/134773806-9a391056-a5e4-433d-8da5-54dbf7aa867d.jpg)
