@@ -34,6 +34,9 @@ so it looks something like this:
 partial_save_path = D:/
 ```
 
+NOTE: Keep in mind that this is a hobby project, don't rely on my code in this project for anything critical!
+
+
 <h1>Background and Explanation</h1>
 This is a program that downloads weather satellite images from the National Oceanic and Atmospheric Administration (NOAA). They have a website for the GOES-16 and GOES-17 satellites in geostationary orbit. On the particular sites listed below the full disk and so called CONUS images are uploaded every 10 minutes (600 seconds) but with a 20 minute (1200 second) lag behind "real time"; so if an image was taken at 12:00:00 UTC it only appears on the website at 12:20:00 UTC.
 
