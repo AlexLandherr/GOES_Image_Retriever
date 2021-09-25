@@ -200,6 +200,9 @@ try:
 except (requests.ConnectionError, requests.Timeout) as exception:
     print("No internet connection.")
 
+except KeyboardInterrupt:
+    print("User interrupted program by Ctrl + C.")
+
 finally:
     print("Program exited.")
     supersleep(5)
