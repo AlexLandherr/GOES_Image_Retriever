@@ -3,9 +3,9 @@
 To properly set up GOES Image Retriever follow the steps outlined below.
 
 1. You need to install these libraries/packages with pip:
-- Pillow
-- requests
-- wget
+- Pillow: https://pillow.readthedocs.io/en/stable/
+- requests: https://docs.python-requests.org/en/latest/
+- wget: https://pypi.org/project/wget/
 
 2. On a storage device of your choosing create a directory named "GOES".
 
