@@ -6,6 +6,7 @@ import requests
 import wget
 import os
 import csv
+import shutil
 from UTC_time_stamp import UTC_time_stamp
 from file_prefixes import file_prefixes
 from supersleep import supersleep
@@ -15,12 +16,15 @@ try:
     #Uses wget Python module for the download process.
     #Checks which directory the program is running in and uses that to locate the .cfg file with settings.
     connection = requests.get("https://cdn.star.nesdis.noaa.gov/", timeout=10)
-    print("Internet Connection is working.")
+    print("Internet Connection is working.")    
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
     current_dir = current_dir.replace("\\", "/")
     cfg = configparser.RawConfigParser()
     cfg.read(current_dir + "/goes_image_settings.cfg")
+    if shutil.disk_usage(cfg["image_file_paths"]["partial_save_path"]).free == 0:
+        raise shutil.Error
+    
     if os.path.exists(cfg["image_file_paths"]["partial_save_path"]) == False or os.path.exists(cfg["image_file_paths"]["save_path"]) == False:
         raise FileNotFoundError("The gathering directory 'GOES_17' or 'GOES_16' appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.")
     
@@ -116,6 +120,8 @@ try:
         file_path = cfg["image_file_paths"]["save_path"] + goes_sat_dir + "/" + goes_dir + "/" + file_name
         url = "https://cdn.star.nesdis.noaa.gov/" + goes_sat + "/ABI/FD/GEOCOLOR/" + img + "_" + goes_sat + "-ABI-FD-GEOCOLOR-" + str(image_res) + "x" + str(image_res) + ".jpg"
         exists = requests.get(url)
+        if len(exists.content) >= shutil.disk_usage(cfg["image_file_paths"]["partial_save_path"]).free:
+            raise shutil.Error
         if exists:
             print("-- " + datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") + " --  " + url)
             print("Downloading image number " + str(no + 1) + " of " + str(number_of_images) + " (" + str(round((((no + 1)/number_of_images) * 100), 4)) + "%). Dummy images: " + str(dummy_counter) + " of " + str(number_of_images) + " (" + str(round(((dummy_counter/number_of_images) * 100), 4)) + "%).\nLength: " + str(len(exists.content)) + " (" + file_prefixes(len(exists.content)) + ") [image/jpeg]\nSaving to: " + file_name)
@@ -154,9 +160,9 @@ try:
     total_size = file_prefixes(sum(file_size_list))
 
     if not speed_list:
-        min_speed = None
-        max_speed = None
-        avg_speed = None
+        min_speed = "None"
+        max_speed = "None"
+        avg_speed = "None"
     else:
         min_speed = file_prefixes(min(speed_list)) + "/s"
         max_speed =  file_prefixes(max(speed_list)) + "/s"
@@ -199,6 +205,9 @@ try:
 
 except (requests.ConnectionError, requests.Timeout) as exception:
     print("No internet connection.")
+
+except shutil.Error:
+    print("Not enough storage space on the drive.")
 
 except KeyboardInterrupt:
     print()
