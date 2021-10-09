@@ -206,6 +206,9 @@ try:
 except (requests.ConnectionError, requests.Timeout) as exception:
     print("No internet connection.")
 
+except FileNotFoundError:
+    print("The gathering directory 'GOES_17' or 'GOES_16' appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.")
+
 except shutil.Error:
     print("Not enough storage space on the drive.")
 
