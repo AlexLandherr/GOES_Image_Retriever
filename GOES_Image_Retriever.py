@@ -16,7 +16,7 @@ try:
     #Uses wget Python module for the download process.
     #Checks which directory the program is running in and uses that to locate the .cfg file with settings.
     connection = requests.get("https://cdn.star.nesdis.noaa.gov/", timeout=10)
-    print("Internet Connection is working.")    
+    print("Internet Connection is working.")
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
     current_dir = current_dir.replace("\\", "/")
