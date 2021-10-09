@@ -26,8 +26,7 @@ try:
         raise shutil.Error
     
     if os.path.exists(cfg["image_file_paths"]["partial_save_path"]) == False or os.path.exists(cfg["image_file_paths"]["save_path"]) == False:
-        raise FileNotFoundError("The gathering directory 'GOES_17' or 'GOES_16' appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.")
-    
+        raise FileNotFoundError()
 
     start_prog = datetime.now(timezone.utc)
     while True:
