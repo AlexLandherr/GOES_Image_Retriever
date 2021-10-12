@@ -24,4 +24,4 @@ def file_prefixes(x):
     elif ZiB <= x < YiB:
         return "{0:.2f} ZiB".format(x / ZiB)
     elif YiB <= x:
-        return "{0:.2f} KiB".format(x / YiB)
+        return "{0:.2f} YiB".format(x / YiB)
