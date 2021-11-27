@@ -86,7 +86,7 @@ try:
     number_of_images = int(recording_time/image_interval)
     print("The number of images to be downloaded is: " + str(number_of_images))
     exit_com = str(input("Do you wish to proceed with the download? [Y/n]: "))
-    if exit_com == "Y" or exit_com == "y":
+    if exit_com == "Y" or exit_com == "y" or exit_com == "":
         pass
     elif exit_com == "n" or exit_com == "N":
         os.rmdir(mkdir_command)
@@ -123,7 +123,7 @@ try:
             raise shutil.Error
         if exists:
             print("-- " + datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") + " --  " + url)
-            print("Downloading image number " + str(no + 1) + " of " + str(number_of_images) + " (" + str(round((((no + 1)/number_of_images) * 100), 4)) + "%). Dummy images: " + str(dummy_counter) + " of " + str(number_of_images) + " (" + str(round(((dummy_counter/number_of_images) * 100), 4)) + "%).\nLength: " + str(len(exists.content)) + " (" + file_prefixes(len(exists.content)) + ") [image/jpeg]\nSaving to: " + file_name)
+            print("Downloading image number " + str(no + 1) + " of " + str(number_of_images) + " (" + str(round((((no + 1)/number_of_images) * 100), 4)) + " %). Dummy images: " + str(dummy_counter) + " of " + str(number_of_images) + " (" + str(round(((dummy_counter/number_of_images) * 100), 4)) + " %).\nLength: " + str(len(exists.content)) + " (" + file_prefixes(len(exists.content)) + ") [image/jpeg]\nSaving to: " + file_name)
             speed_start = time.time()
             wget.download(url, file_name)
             speed_stop = time.time()
