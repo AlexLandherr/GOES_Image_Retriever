@@ -15,8 +15,11 @@ from countdown import countdown
 try:
     #Uses wget Python module for the download process.
     #Checks which directory the program is running in and uses that to locate the .cfg file with settings.
-    connection = requests.get("https://cdn.star.nesdis.noaa.gov/", timeout=10)
-    print("Internet Connection is working.")
+    connection_to_goes16 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G16", timeout=10)
+    print("Connection to GOES-16 website is working.")
+
+    connection_to_goes17 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G17", timeout=10)
+    print("Connection to GOES-17 website is working.")
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
     current_dir = current_dir.replace("\\", "/")
@@ -203,7 +206,7 @@ try:
         info.write("UTC Start Time Image Download: " + start.strftime("%Y-%m-%d %H:%M:%S") + "\n" + "UTC Stop Time Image Download: " + stop.strftime("%Y-%m-%d %H:%M:%S") + "\n" + "UTC Program Start Time: " + start_prog.strftime("%Y-%m-%d %H:%M:%S.%f") + "\n" + "UTC Program Stop Time: " + stop_prog.strftime("%Y-%m-%d %H:%M:%S.%f") + "\n" + "Program runtime: " + countdown(timedelta.total_seconds(stop_prog - start_prog) - 5) + "\n" + "Image interval in seconds, default being 600: " + str(image_interval) + "\n" + "Total recording time: " + countdown(recording_time) + "\n" + "The image file size min/avg/max: " + min_size + "/" + avg_size + "/" + max_size + "\n" + "The download speed for the image files min - avg - max: " + min_speed + " - " + avg_speed + " - " + max_speed + "\n" + "The total amount of downloaded data: " + total_size + "\n" + "The number of images is: " + str(number_of_images) + "\n" + "The number of dummy images is: " + str(dummy_counter) + "\n" + "The image resolution in pixels is: " + str(image_res) + "x" + str(image_res) + "\n" + "The satellite is: " + goes_sat)
 
 except (requests.ConnectionError, requests.Timeout) as exception:
-    print("No internet connection.")
+    print("Either of the GOES-16 or GOES-17 websites are unreachable at the moment.")
 
 except FileNotFoundError:
     print("The gathering directory 'GOES_17' or 'GOES_16' appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.\nAlso check if the 'goes_image_settings.cfg' file is present.")
