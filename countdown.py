@@ -6,5 +6,5 @@ def countdown(x):
     hours = int((x - (days * sec_in_day)) // sec_in_hour)
     minutes = int((x - (days * sec_in_day) - (hours * sec_in_hour)) // sec_in_minute)
     seconds = round(((x - (days * sec_in_day) - (hours * sec_in_hour) - (minutes * 60))), 6)
-    time = "{0} days, {1} hours, {2} minutes, {3} seconds.".format(str(days), str(hours), str(minutes), str(seconds))
+    time = f"{days} days, {hours} hours, {minutes} minutes, {seconds} seconds."
     return time
