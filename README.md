@@ -2,19 +2,22 @@
 
 To properly set up GOES Image Retriever follow the steps outlined below.
 
-1. You need to install these libraries/packages with pip:
+1. Clone the repository either via `git clone https://github.com/AlexLandherr/GOES_Image_Retriever`, download the zip of the repository
+or open with GitHub Desktop: https://desktop.github.com/
+
+2. You need to install these libraries/packages with pip:
 - Pillow: https://pillow.readthedocs.io/en/stable/
 - requests: https://docs.python-requests.org/en/latest/
 - wget: https://pypi.org/project/wget/
 
-2. On a storage device of your choosing create a directory named "GOES".
+3. On a storage device of your choosing create a directory named "GOES".
 
-3. Now go to "goes_image_settings.cfg" and on the line starting with "save_path" add the full file path to the "GOES" directory.
+4. Now go to "goes_image_settings.cfg" and on the line starting with "save_path" add the full file path to the "GOES" directory.
 It should look something like this:
 ```
 save_path = D:/path/to/GOES/
 ```
-4. In the directory named "GOES" create two sub-directories named "GOES_16" and "GOES_17".
+5. In the directory named "GOES" create two sub-directories named "GOES_16" and "GOES_17".
 The directory tree should look something like this:
 ```
 D:\
@@ -28,13 +31,14 @@ D:\
            └───GOES_17\
 ```
 
-4. To the line starting with "partial_save_path" add the drive letter followed by a ":" and "/"
+6. To the line starting with "partial_save_path" add the drive letter followed by a ":" and "/"
 so it looks something like this:
 ```
 partial_save_path = D:/
 ```
 
-NOTE: Keep in mind that this is a hobby project, don't rely on my code in this project for anything critical!
+<h1>Note</h1>
+Keep in mind that this is a hobby project, don't rely on my code in this project for anything critical!
 
 
 <h1>Background and Explanation</h1>
