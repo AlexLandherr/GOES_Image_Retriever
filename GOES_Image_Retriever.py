@@ -11,10 +11,12 @@ from UTC_time_stamp import UTC_time_stamp
 from file_prefixes import file_prefixes
 from supersleep import supersleep
 from countdown import countdown
+from truncate import truncate
 
 try:
     #Uses wget Python module for the download process.
     #Checks which directory the program is running in and uses that to locate the .cfg file with settings.
+    print("Checking connection to websites...")
     connection_to_goes16 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G16", timeout=10)
     print("Connection to GOES-16 website is working.")
 
@@ -33,7 +35,7 @@ try:
 
     start_prog = datetime.now(timezone.utc)
     while True:
-        goes_sat = input("Select which satellite to download images from (GOES-16 or GOES-17) by typing its name, e.g. GOES16: ")
+        goes_sat = input("\nSelect which satellite to download images from (GOES-16 or GOES-17) by typing its name, e.g. GOES16: ")
         if goes_sat == "GOES16" or goes_sat == "goes16" or goes_sat == "GOES17" or goes_sat == "goes17":
             break
         else:
@@ -79,7 +81,7 @@ try:
 
     recording_time = timedelta.total_seconds(stop - start)
     while True:
-        image_freq = int(input("For " + goes_sat + " set number to be skipped: "))
+        image_freq = int(input("For " + goes_sat + " set number of images to be skipped: "))
         if image_freq < 0:
             print("The number of images to be skipped cannot be a negative value, please try again.")
         else:
@@ -126,26 +128,26 @@ try:
             raise shutil.Error
         if exists:
             print("-- " + datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") + " --  " + url)
-            print("Downloading image number " + str(no + 1) + " of " + str(number_of_images) + " (" + str(round((((no + 1)/number_of_images) * 100), 4)) + " %). Dummy images: " + str(dummy_counter) + " of " + str(number_of_images) + " (" + str(round(((dummy_counter/number_of_images) * 100), 4)) + " %).\nLength: " + str(len(exists.content)) + " (" + file_prefixes(len(exists.content)) + ") [image/jpeg]\nSaving to: " + file_name)
-            speed_start = time.time()
+            print("Downloading image number " + str(no + 1) + " of " + str(number_of_images) + " (" + str(truncate((((no + 1)/number_of_images) * 100), 4)) + " %). Dummy images: " + str(dummy_counter) + " of " + str(number_of_images) + " (" + str(truncate(((dummy_counter/number_of_images) * 100), 4)) + " %).\nLength: " + str(len(exists.content)) + " (" + file_prefixes(len(exists.content)) + ") [image/jpeg]\nSaving to: " + file_name)
+            download_start = time.time()
             wget.download(url, file_name)
-            speed_stop = time.time()
+            download_stop = time.time()
             print("\n")
-            speed_total = speed_stop - speed_start
-            avg = len(exists.content)/speed_total
-            speed_list.append(avg)
+            download_duration = download_stop - download_start
+            avg_speed = len(exists.content)/download_duration
+            speed_list.append(avg_speed)
             with open(cfg["image_file_paths"]["save_path"] + goes_sat_dir + "/" + goes_dir + "/" + goes_dir + "_file_index_" + start_prog.strftime("%Y-%m-%d") + ".csv", "a", newline="") as csv_index:
                 field_names = ["file_name", "file_size", "time", "download_speed"]
                 writer = csv.DictWriter(csv_index, fieldnames=field_names)
-                writer.writerow({"file_name": file_name, "file_size": len(exists.content), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": str(int(avg))})
-            print(datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") + " (" + file_prefixes(avg) + "/s)" + " - " + file_name + " saved [" + str(os.path.getsize(file_path)) + "/" + str(len(exists.content)) + "]\n")
+                writer.writerow({"file_name": file_name, "file_size": len(exists.content), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": str(int(avg_speed))})
+            print(datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") + " (" + file_prefixes(avg_speed) + "/s)" + " - " + file_name + " saved [" + str(os.path.getsize(file_path)) + "/" + str(len(exists.content)) + "]\n")
         else:
             img_ex = Image.new("RGB", (image_res, image_res), color = "black")
             img_ex.save(file_path)
             with open(cfg["image_file_paths"]["save_path"] + goes_sat_dir + "/" + goes_dir + "/" + goes_dir + "_file_index_" + start_prog.strftime("%Y-%m-%d") + ".csv", "a", newline="") as csv_index:
                 field_names = ["file_name", "file_size", "time", "download_speed"]
                 writer = csv.DictWriter(csv_index, fieldnames=field_names)
-                writer.writerow({"file_name": file_name, "file_size": os.path.getsize(file_path), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "N/A"})
+                writer.writerow({"file_name": file_name, "file_size": os.path.getsize(file_path), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "0"})
             dummy_counter += 1
             print("Image not found, generating dummy image. Image number " + str(no + 1) + " of " + str(number_of_images) + ".\n")
 
@@ -181,7 +183,7 @@ try:
             with open(cfg["image_file_paths"]["save_path"] + goes_sat_dir + "/" + goes_dir + "/" + goes_dir + "_file_index_" + start_prog.strftime("%Y-%m-%d") + ".csv", "a", newline="") as csv_index:
                 field_names = ["file_name", "file_size", "time", "download_speed"]
                 writer = csv.DictWriter(csv_index, fieldnames=field_names)
-                writer.writerow({"file_name": filename, "file_size": os.path.getsize(file), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "N/A"})
+                writer.writerow({"file_name": filename, "file_size": os.path.getsize(file), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "0"})
             dummy_counter += 1
         elif os.path.getsize(file) == 0:
             print("File has size 0 bytes, generating dummy image.")
@@ -195,7 +197,7 @@ try:
                         with open(cfg["image_file_paths"]["save_path"] + goes_sat_dir + "/" + goes_dir + "/" + goes_dir + "_file_index_" + start_prog.strftime("%Y-%m-%d") + ".csv", "a", newline="") as csv_index:
                             field_names = ["file_name", "file_size", "time", "download_speed"]
                             writer = csv.DictWriter(csv_index, fieldnames=field_names)
-                            writer.writerow({"file_name": filename, "file_size": os.path.getsize(file), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "N/A"})
+                            writer.writerow({"file_name": filename, "file_size": os.path.getsize(file), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "0"})
                         dummy_counter += 1
 
     print("Exiting program...")
