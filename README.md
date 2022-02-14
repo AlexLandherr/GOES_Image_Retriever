@@ -1,14 +1,12 @@
 <h1>Installation</h1>
 
-To properly set up GOES Image Retriever follow the steps outlined below.
-
-1. Clone the repository either via `git clone https://github.com/AlexLandherr/GOES_Image_Retriever`, download the zip of the repository
-or open with GitHub Desktop: https://desktop.github.com/
-
-2. You need to install these libraries/packages with pip:
+1. You need to install these libraries/packages with pip:
 - Pillow: https://pillow.readthedocs.io/en/stable/
 - requests: https://docs.python-requests.org/en/latest/
 - wget: https://pypi.org/project/wget/
+
+2. Clone the repository either via `git clone https://github.com/AlexLandherr/GOES_Image_Retriever`, download the zip of the repository
+or open with GitHub Desktop: https://desktop.github.com/
 
 3. On a storage device of your choosing create a directory named "GOES".
 
