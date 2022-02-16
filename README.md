@@ -11,7 +11,7 @@ or open with GitHub Desktop: https://desktop.github.com/
 3. On a storage device of your choosing create a directory named "GOES".
 
 4. Now go to "goes_image_settings.cfg" and on the line starting with "save_path" add the full file path to the "GOES" directory.
-It should look something like this:
+It should look something like this (keep in mind that it will look a bit different on GNU/Linux systems and systems running MacOS):
 ```
 save_path = D:/path/to/GOES/
 ```
