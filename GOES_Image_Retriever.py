@@ -213,7 +213,7 @@ except (requests.ConnectionError, requests.Timeout) as exception:
     print("Either of the GOES-16 or GOES-17 websites are unreachable at the moment.")
 
 except FileNotFoundError:
-    print("The gathering directory 'GOES_17' or 'GOES_16' appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.\nAlso check if the 'goes_image_settings.cfg' file is present.")
+    print("The gathering directory appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.\nAlso check if the 'goes_image_settings.cfg' file is present.")
 
 except shutil.Error:
     print("Not enough storage space on the drive.")
