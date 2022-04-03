@@ -217,8 +217,7 @@ except shutil.Error:
     print("Not enough storage space on the drive.")
 
 except KeyboardInterrupt:
-    print()
-    print("User interrupted program by Ctrl + C.")
+    print("\nUser interrupted program by Ctrl + C.")
 
 finally:
     print("Program exited.")
