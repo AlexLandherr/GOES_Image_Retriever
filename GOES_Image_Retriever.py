@@ -23,6 +23,9 @@ try:
     connection_to_goes17 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G17", timeout=10)
     print("Connection to GOES-17 website is working.")
 
+    valid_image_resolutions = (339, 678, 1808, 5424, 10848, 21696)
+    yes_commands = ("Y", "y", "")
+    no_commands = ("N", "n")
     current_dir = os.path.dirname(os.path.abspath(__file__))
     current_dir = current_dir.replace("\\", "/")
     cfg = configparser.RawConfigParser()
@@ -75,8 +78,15 @@ try:
     start_date = start.strftime("%Y-%m-%d")
 
     while True:
-        image_res = int(input("These are the image resolutions available:\n339x339 pixels\n678x678 pixels\n1808x1808 pixels\n5424x5424 pixels\n10848x10848 pixels\nSelect a resolution by typing either of these values, e.g. 10848: "))
-        if image_res == 339 or image_res == 678 or image_res == 1808 or image_res == 5424 or image_res == 10848:
+        options = ("339x339 pixels\n"
+                   "678x678 pixels\n"
+                   "1808x1808 pixels\n"
+                   "5424x5424 pixels\n"
+                   "10848x10848 pixels\n"
+                   "21696x21696 pixels\n"
+                   "Select a resolution by typing either of these values, e.g. 21696: ")
+        image_res = int(input(options))
+        if image_res in valid_image_resolutions:
             break
         else:
             print("Invalid resolution value, please try one of the listed values.")
@@ -93,9 +103,9 @@ try:
     number_of_images = int(recording_time/image_interval)
     print("The number of images to be downloaded is: " + str(number_of_images))
     exit_com = str(input("Do you wish to proceed with the download? [Y/n]: "))
-    if exit_com == "Y" or exit_com == "y" or exit_com == "":
+    if exit_com in yes_commands:
         pass
-    elif exit_com == "n" or exit_com == "N":
+    elif exit_com in no_commands:
         os.rmdir(mkdir_command)
         exit()
     img_dict = {}
@@ -213,7 +223,11 @@ except (requests.ConnectionError, requests.Timeout) as exception:
     print("Either of the GOES-16 or GOES-17 websites are unreachable at the moment.")
 
 except FileNotFoundError:
-    print("The gathering directory appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.\nAlso check if the 'goes_image_settings.cfg' file is present.")
+    #print("The gathering directory appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.\nAlso check if the 'goes_image_settings.cfg' file is present.")
+    print("""
+             The gathering directory appears not to exist.
+             Please check if the storage device where the folder is located is properly mounted or physically connected.
+             Also check if the 'goes_image_settings.cfg' file is present.""")
 
 except shutil.Error:
     print("Not enough storage space on the drive.")
