@@ -20,8 +20,8 @@ try:
     connection_to_goes16 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G16", timeout=10)
     print("Connection to GOES-16 website is working.")
 
-    connection_to_goes17 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G17", timeout=10)
-    print("Connection to GOES-17 website is working.")
+    connection_to_goes18 = requests.get("https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G18", timeout=10)
+    print("Connection to GOES-18 website is working.")
 
     valid_image_resolutions = (339, 678, 1808, 5424, 10848, 21696)
     yes_commands = ("Y", "y", "")
@@ -38,11 +38,11 @@ try:
 
     start_prog = datetime.now(timezone.utc)
     while True:
-        goes_sat = input("\nSelect which satellite to download images from (GOES-16 or GOES-17) by typing its name, e.g. GOES16: ")
-        if goes_sat == "GOES16" or goes_sat == "goes16" or goes_sat == "GOES17" or goes_sat == "goes17":
+        goes_sat = input("\nSelect which satellite to download images from (GOES-16 or GOES-18) by typing its name, e.g. GOES16: ")
+        if goes_sat == "GOES16" or goes_sat == "goes16" or goes_sat == "GOES18" or goes_sat == "goes18":
             break
         else:
-            print("Invalid satellite name, please try 'GOES16' or 'GOES17'.")
+            print("Invalid satellite name, please try 'GOES16' or 'GOES18'.")
 
     goes_dir = input("Set the name of the directory that will contain the images from " + goes_sat + ": ")
     if goes_dir == "":
@@ -50,8 +50,8 @@ try:
 
     if goes_sat == "GOES16" or goes_sat == "goes16":
         goes_sat_dir = "GOES_16"
-    elif goes_sat == "GOES17" or goes_sat == "goes17":
-        goes_sat_dir = "GOES_17"
+    elif goes_sat == "GOES18" or goes_sat == "goes18":
+        goes_sat_dir = "GOES_18"
     
     complete_dir_name = goes_sat_dir + "_" + goes_dir
 
@@ -186,7 +186,7 @@ try:
 
     for i, img in img_dict.items():
         filename = img + "_" + goes_sat + "-ABI-FD-GEOCOLOR-" + str(image_res) + "x" + str(image_res) + ".jpg"
-        file = cfg["image_file_paths"]["save_path"] + complete_dir_name + "/" + file_name
+        file = cfg["image_file_paths"]["save_path"] + complete_dir_name + "/" + filename
         print("Checking: " + file)
         if os.path.exists(file) == False:
             print("File does not exist, generating dummy image.")
@@ -220,7 +220,7 @@ try:
         info.write("UTC Start Time Image Download: " + start.strftime("%Y-%m-%d %H:%M:%S") + "\n" + "UTC Stop Time Image Download: " + stop.strftime("%Y-%m-%d %H:%M:%S") + "\n" + "UTC Program Start Time: " + start_prog.strftime("%Y-%m-%d %H:%M:%S.%f") + "\n" + "UTC Program Stop Time: " + stop_prog.strftime("%Y-%m-%d %H:%M:%S.%f") + "\n" + "Program runtime: " + countdown(timedelta.total_seconds(stop_prog - start_prog) - 5) + "\n" + "Image interval in seconds, default being 600: " + str(image_interval) + "\n" + "Total recording time: " + countdown(recording_time) + "\n" + "The image file size min/avg/max: " + min_size + "/" + avg_size + "/" + max_size + "\n" + "The download speed for the image files min - avg - max: " + min_speed + " - " + avg_speed + " - " + max_speed + "\n" + "The total amount of downloaded data: " + total_size + "\n" + "The number of images is: " + str(number_of_images) + "\n" + "The number of dummy images is: " + str(dummy_counter) + "\n" + "The image resolution in pixels is: " + str(image_res) + "x" + str(image_res) + "\n" + "The satellite is: " + goes_sat)
 
 except (requests.ConnectionError, requests.Timeout) as exception:
-    print("Either of the GOES-16 or GOES-17 websites are unreachable at the moment.")
+    print("Either of the GOES-16 or GOES-18 websites are unreachable at the moment.")
 
 except FileNotFoundError:
     #print("The gathering directory appears not to exist. \nPlease check if the storage device where the folder is located is properly mounted or physically connected.\nAlso check if the 'goes_image_settings.cfg' file is present.")
