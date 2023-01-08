@@ -211,6 +211,16 @@ try:
                             writer = csv.DictWriter(csv_index, fieldnames=field_names)
                             writer.writerow({"file_name": filename, "file_size": os.path.getsize(file), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "0"})
                         dummy_counter += 1
+    
+    #Renaming files to have format of "image00000000.jpg" etc. (makes it easier to create time lapse with ffmpeg and other software)."
+    with open(cfg["image_file_paths"]["save_path"] + complete_dir_name + "/" + complete_dir_name + "_file_index_" + start_prog.strftime("%Y-%m-%d") + ".csv", "r", newline="") as csv_index:
+        reader = csv.DictReader(csv_index)
+        rename_index = 0
+        for row in reader:
+            fname = row["file_name"]
+            os.rename(fname, "image" + str(rename_index).zfill(8) + ".jpg")
+            rename_index += 1
+            
 
     print("Exiting program...")
     supersleep(5)
