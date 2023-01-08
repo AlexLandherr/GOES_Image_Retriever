@@ -212,7 +212,7 @@ try:
                             writer.writerow({"file_name": filename, "file_size": os.path.getsize(file), "time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"), "download_speed": "0"})
                         dummy_counter += 1
     
-    #Renaming files to have format of "image00000000.jpg" etc. (makes it easier to create time lapse with ffmpeg and other software)."
+    #Renaming files to have format of "image00000000.jpg" etc. (makes it easier to create time lapse with ffmpeg and other software).
     with open(cfg["image_file_paths"]["save_path"] + complete_dir_name + "/" + complete_dir_name + "_file_index_" + start_prog.strftime("%Y-%m-%d") + ".csv", "r", newline="") as csv_index:
         reader = csv.DictReader(csv_index)
         rename_index = 0
